@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import time
 import random
+from st_keyup import st_keyup
 
 # ==========================================
 # 1. STIMULUS POOL CONFIGURATION
@@ -79,6 +80,21 @@ def generate_stroop_schedule(trials_per_condition=20):
 st.set_page_config(
     page_title="Stroop Color Test",
     layout="centered"
+)
+
+st.markdown(
+    """
+    <div style="
+        text-align:center;
+        margin-top:15px;
+        margin-bottom:15px;
+        font-size:18px;
+        color:#888;
+    ">
+        Press the key corresponding to the FONT COLOR.
+    </div>
+    """,
+    unsafe_allow_html=True
 )
 
 if "stage" not in st.session_state:
@@ -239,40 +255,45 @@ elif st.session_state.stage == "testing":
         unsafe_allow_html=True
     )
 
-    c1, c2 = st.columns(2)
-    c3, c4 = st.columns(2)
+    st.markdown(
+    """
+    <div style="
+        text-align:center;
+        margin-top:40px;
+        color:#666;
+    ">
+        <p><b>Use Keyboard Responses</b></p>
+        <p>R = RED | G = GREEN | B = BLUE | Y = YELLOW</p>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
-    with c1:
-        st.button(
-            "RED",
-            use_container_width=True,
-            on_click=process_response,
-            args=("RED",)
-        )
+keyboard_input = st_keyup(
+    "",
+    key=f"keyboard_trial_{idx}",
+    debounce=0
+)
 
-    with c2:
-        st.button(
-            "BLUE",
-            use_container_width=True,
-            on_click=process_response,
-            args=("BLUE",)
-        )
+if keyboard_input:
 
-    with c3:
-        st.button(
-            "GREEN",
-            use_container_width=True,
-            on_click=process_response,
-            args=("GREEN",)
-        )
+    key_pressed = keyboard_input.strip().lower()
 
-    with c4:
-        st.button(
-            "YELLOW",
-            use_container_width=True,
-            on_click=process_response,
-            args=("YELLOW",)
-        )
+    if key_pressed == "r":
+        process_response("RED")
+        st.rerun()
+
+    elif key_pressed == "g":
+        process_response("GREEN")
+        st.rerun()
+
+    elif key_pressed == "b":
+        process_response("BLUE")
+        st.rerun()
+
+    elif key_pressed == "y":
+        process_response("YELLOW")
+        st.rerun()
 
 # ------------------------------------------
 # COMPLETION SCREEN
