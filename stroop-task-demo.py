@@ -10,11 +10,9 @@ import random
 
 COLORS = {
     "RED": "#FF0000",
-    "ORANGE": "#FF991C",
-    "YELLOW": "#FFED29",
-    "GREEN": "#00AA00",
     "BLUE": "#0066FF",
-    "PINK": "#FF46A2"
+    "GREEN": "#00AA00",
+    "YELLOW": "#D4AA00"
 }
 
 TRIALS_PER_CONDITION = 20
@@ -190,22 +188,24 @@ if st.session_state.stage == "ready":
             TRIALS_PER_CONDITION
         )
 
-    st.markdown("### Instructions")
+    st.markdown(
+        """
+        <div style="text-align:center; margin-top:100px;">
+            <h1 style="font-size:54px;">
+                Stroop Color Test
+            </h1>
 
-st.markdown(
-    """
-    <div style="text-align:center; margin-top:40px;">
-        <p style="font-size:20px;">
-            Identify the FONT COLOR of each word.
-        </p>
+            <p style="font-size:20px;">
+                Identify the FONT COLOR of each word.
+            </p>
 
-        <p style="color:gray;">
-            Ignore what the word says.
-        </p>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+            <p style="color:gray;">
+                Ignore what the word says.
+            </p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
     _, c, _ = st.columns([1, 1.2, 1])
 
@@ -276,28 +276,14 @@ elif st.session_state.stage == "testing":
         )
 
         st.button(
-            "ORANGE",
-            use_container_width=True,
-            on_click=process_response,
-            args=("ORANGE",)
-        )
-
-        st.button(
-            "YELLOW",
-            use_container_width=True,
-            on_click=process_response,
-            args=("YELLOW",)
-        )
-
-    with col2:
-
-        st.button(
             "GREEN",
             use_container_width=True,
             on_click=process_response,
             args=("GREEN",)
         )
-        
+
+    with col2:
+
         st.button(
             "BLUE",
             use_container_width=True,
@@ -306,10 +292,10 @@ elif st.session_state.stage == "testing":
         )
 
         st.button(
-            "PINK",
+            "YELLOW",
             use_container_width=True,
             on_click=process_response,
-            args=("PINK",)
+            args=("YELLOW",)
         )
 
 
