@@ -274,13 +274,27 @@ elif st.session_state.stage == "testing":
         )
 
         st.button(
+            "ORANGE",
+            use_container_width=True,
+            on_click=process_response,
+            args=("ORANGE",)
+        )
+
+        st.button(
+            "YELLOW",
+            use_container_width=True,
+            on_click=process_response,
+            args=("YELLOW",)
+        )
+
+    with col2:
+
+        st.button(
             "GREEN",
             use_container_width=True,
             on_click=process_response,
             args=("GREEN",)
         )
-
-    with col2:
 
         st.button(
             "BLUE",
@@ -290,10 +304,10 @@ elif st.session_state.stage == "testing":
         )
 
         st.button(
-            "YELLOW",
+            "PINK",
             use_container_width=True,
             on_click=process_response,
-            args=("YELLOW",)
+            args=("PINK",)
         )
 
 
