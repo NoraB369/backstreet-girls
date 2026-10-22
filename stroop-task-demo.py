@@ -191,23 +191,19 @@ if st.session_state.stage == "ready":
         )
 
     st.markdown(
-        """
-        <div style="text-align:center; margin-top:100px;">
-            <h1 style="font-size:54px;">
-                Stroop Color Test
-            </h1>
+    """
+    <div style="text-align:center; margin-top:40px;">
+        <p style="font-size:20px;">
+            Identify the FONT COLOR of each word.
+        </p>
 
-            <p style="font-size:20px;">
-                Identify the FONT COLOR of each word.
-            <p>
-
-            <p style="color:gray;">
-                Ignore what the word says.
-            <p>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+        <p style="color:gray;">
+            Ignore what the word says.
+        </p>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
     _, c, _ = st.columns([1, 1.2, 1])
 
