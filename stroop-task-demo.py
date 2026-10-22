@@ -200,6 +200,11 @@ if st.session_state.stage == "ready":
             </p>
                 Ignore what the word says.
             </p>
+            </p>
+                Each color corresponds to a number on the keyboard.
+            </p>
+                Ex. Red = 1, Orange = 2, Yellow = 3.
+            </p>
         </div>
         """,
         unsafe_allow_html=True
@@ -275,7 +280,7 @@ elif st.session_state.stage == "testing":
         )
 
         st.button(
-            "ORANGE - PRESS 2",
+            "ORANGE - PRESS",
             shortcut="2",
             use_container_width=True,
             on_click=process_response,
@@ -283,7 +288,7 @@ elif st.session_state.stage == "testing":
         )
 
         st.button(
-            "YELLOW - PRESS 3",
+            "YELLOW - PRESS",
             shortcut="3",
             use_container_width=True,
             on_click=process_response,
@@ -293,7 +298,7 @@ elif st.session_state.stage == "testing":
     with col2:
 
         st.button(
-            "GREEN - PRESS 4",
+            "GREEN - PRESS",
             shortcut="4",
             use_container_width=True,
             on_click=process_response,
@@ -301,7 +306,7 @@ elif st.session_state.stage == "testing":
         )
 
         st.button(
-            "BLUE - PRESS 5",
+            "BLUE - PRESS",
             shortcut="5",
             use_container_width=True,
             on_click=process_response,
@@ -309,7 +314,7 @@ elif st.session_state.stage == "testing":
         )
 
         st.button(
-            "PINK - PRESS 6",
+            "PINK - PRESS",
             shortcut="6",
             use_container_width=True,
             on_click=process_response,
