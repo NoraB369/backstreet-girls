@@ -267,7 +267,7 @@ elif st.session_state.stage == "testing":
     with col1:
 
         st.button(
-            "RED - PRESS 1", 
+            "RED - PRESS", 
             shortcut="1",
             use_container_width=True,
             on_click=process_response,
