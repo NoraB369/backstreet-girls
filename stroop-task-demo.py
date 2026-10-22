@@ -11,7 +11,7 @@ import random
 COLORS = {
     "RED": "#FF0000",
     "ORANGE": "#FF5C00",
-    "YELLOW": "#D4AA00",
+    "YELLOW": "#FFED29",
     "GREEN": "#00AA00",
     "BLUE": "#0066FF",
     "PINK": "#FFC0CB"
