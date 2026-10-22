@@ -14,7 +14,7 @@ COLORS = {
     "YELLOW": "#FFED29",
     "GREEN": "#00AA00",
     "BLUE": "#0066FF",
-    "PINK": "#FF7782"
+    "PINK": "#FF46A2"
 }
 
 TRIALS_PER_CONDITION = 20
