@@ -3,7 +3,6 @@ import pandas as pd
 import numpy as np
 import time
 import random
-from st_keyup import st_keyup
 
 # ==========================================
 # 1. STIMULUS POOL CONFIGURATION
@@ -13,7 +12,7 @@ COLORS = {
     "RED": "#FF0000",
     "BLUE": "#0066FF",
     "GREEN": "#00AA00",
-    "YELLOW": "#E6B800"
+    "YELLOW": "#D4AA00"
 }
 
 TRIALS_PER_CONDITION = 20
@@ -24,14 +23,6 @@ ADMIN_PASSWORD = "backstreet"
 # ==========================================
 
 def generate_stroop_schedule(trials_per_condition=20):
-    """
-    Generates a balanced Stroop schedule containing:
-        - Congruent trials
-        - Incongruent trials
-
-    Returns:
-        List[Dict]
-    """
 
     trials = []
 
@@ -40,7 +31,9 @@ def generate_stroop_schedule(trials_per_condition=20):
     # --------------------------
     # Congruent Trials
     # --------------------------
+
     for _ in range(trials_per_condition):
+
         word = random.choice(color_words)
 
         trials.append({
@@ -53,11 +46,15 @@ def generate_stroop_schedule(trials_per_condition=20):
     # --------------------------
     # Incongruent Trials
     # --------------------------
+
     for _ in range(trials_per_condition):
 
         word = random.choice(color_words)
 
-        possible_colors = [c for c in color_words if c != word]
+        possible_colors = [
+            c for c in color_words
+            if c != word
+        ]
 
         font_color = random.choice(possible_colors)
 
@@ -78,23 +75,8 @@ def generate_stroop_schedule(trials_per_condition=20):
 # ==========================================
 
 st.set_page_config(
-    page_title="Stroop Color Test",
+    page_title="Stroop Test",
     layout="centered"
-)
-
-st.markdown(
-    """
-    <div style="
-        text-align:center;
-        margin-top:15px;
-        margin-bottom:15px;
-        font-size:18px;
-        color:#888;
-    ">
-        Press the key corresponding to the FONT COLOR.
-    </div>
-    """,
-    unsafe_allow_html=True
 )
 
 if "stage" not in st.session_state:
@@ -123,7 +105,7 @@ if "show_password_box" not in st.session_state:
 
 
 # ==========================================
-# 4. TASK CONTROL FUNCTIONS
+# 4. TASK FUNCTIONS
 # ==========================================
 
 def start_experiment():
@@ -152,17 +134,28 @@ def process_response(user_choice):
 
     correct_response = current_trial["correct_response"]
 
-    is_correct = int(user_choice == correct_response)
+    is_correct = int(
+        user_choice == correct_response
+    )
 
     st.session_state.results.append({
+
         "trial_number": idx + 1,
+
         "word": current_trial["word"],
-        "font_color": current_trial["font_color"],
+
+        "display_color": current_trial["font_color"],
+
         "condition": current_trial["condition"],
+
         "correct_response": correct_response,
+
         "user_response": user_choice,
+
         "is_correct": is_correct,
+
         "reaction_time_sec": reaction_time
+
     })
 
     if idx + 1 >= len(st.session_state.trials):
@@ -184,12 +177,13 @@ def process_response(user_choice):
 # ==========================================
 
 # ------------------------------------------
-# READY SCREEN
+# SCREEN 1: READY
 # ------------------------------------------
 
 if st.session_state.stage == "ready":
 
     if not st.session_state.trials:
+
         st.session_state.trials = generate_stroop_schedule(
             TRIALS_PER_CONDITION
         )
@@ -202,10 +196,10 @@ if st.session_state.stage == "ready":
             </h1>
 
             <p style="font-size:20px;">
-                Select the FONT COLOR of the word.
+                Identify the FONT COLOR of each word.
             </p>
 
-            <p>
+            <p style="color:gray;">
                 Ignore what the word says.
             </p>
         </div>
@@ -213,17 +207,19 @@ if st.session_state.stage == "ready":
         unsafe_allow_html=True
     )
 
-    _, c, _ = st.columns([1,1.2,1])
+    _, c, _ = st.columns([1, 1.2, 1])
 
     with c:
+
         st.button(
-            "Begin Test",
+            "Click Here To Begin",
             use_container_width=True,
             on_click=start_experiment
         )
 
+
 # ------------------------------------------
-# ACTIVE TEST SCREEN
+# SCREEN 2: TESTING
 # ------------------------------------------
 
 elif st.session_state.stage == "testing":
@@ -233,70 +229,78 @@ elif st.session_state.stage == "testing":
     trial = st.session_state.trials[idx]
 
     displayed_word = trial["word"]
-    displayed_color = COLORS[trial["font_color"]]
+
+    displayed_color = COLORS[
+        trial["font_color"]
+    ]
 
     st.markdown(
-        f"""
-        <div style="text-align:center; margin-top:80px;">
-            <p style="font-size:18px; color:#888;">
+        """
+        <div style="text-align:center;">
+            <h3>
                 What COLOR is this word displayed in?
-            </p>
-
-            <h1 style="
-                font-size:90px;
-                font-weight:800;
-                color:{displayed_color};
-                margin-top:20px;
-            ">
-                {displayed_word}
-            </h1>
+            </h3>
         </div>
         """,
         unsafe_allow_html=True
     )
 
+    # Large stimulus presentation
     st.markdown(
-    """
-    <div style="
-        text-align:center;
-        margin-top:40px;
-        color:#666;
-    ">
-        <p><b>Use Keyboard Responses</b></p>
-        <p>R = RED | G = GREEN | B = BLUE | Y = YELLOW</p>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+        f"""
+        <p style="
+            text-align:center;
+            color:{displayed_color};
+            font-size:100px;
+            font-weight:700;
+            margin-top:80px;
+            margin-bottom:80px;
+        ">
+        {displayed_word}
+        </p>
+        """,
+        unsafe_allow_html=True
+    )
 
-keyboard_input = st_keyup(
-    "",
-    key=f"keyboard_trial_{idx}",
-    debounce=0
-)
+    # Response Buttons
 
-if keyboard_input:
+    col1, col2 = st.columns(2)
 
-    key_pressed = keyboard_input.strip().lower()
+    with col1:
 
-    if key_pressed == "r":
-        process_response("RED")
-        st.rerun()
+        st.button(
+            "RED",
+            use_container_width=True,
+            on_click=process_response,
+            args=("RED",)
+        )
 
-    elif key_pressed == "g":
-        process_response("GREEN")
-        st.rerun()
+        st.button(
+            "GREEN",
+            use_container_width=True,
+            on_click=process_response,
+            args=("GREEN",)
+        )
 
-    elif key_pressed == "b":
-        process_response("BLUE")
-        st.rerun()
+    with col2:
 
-    elif key_pressed == "y":
-        process_response("YELLOW")
-        st.rerun()
+        st.button(
+            "BLUE",
+            use_container_width=True,
+            on_click=process_response,
+            args=("BLUE",)
+        )
+
+        st.button(
+            "YELLOW",
+            use_container_width=True,
+            on_click=process_response,
+            args=("YELLOW",)
+        )
+
 
 # ------------------------------------------
-# COMPLETION SCREEN
+# SCREEN 3: COMPLETED
 # ------------------------------------------
 
 elif st.session_state.stage == "completed":
@@ -305,7 +309,9 @@ elif st.session_state.stage == "completed":
         """
         <div style="text-align:center; margin-top:60px;">
             <h2>Task Complete</h2>
-            <p>Thank you for participating.</p>
+            <p style="color:#666;">
+                Thank you for your participation.
+            </p>
         </div>
         """,
         unsafe_allow_html=True
@@ -313,7 +319,7 @@ elif st.session_state.stage == "completed":
 
     if not st.session_state.show_password_box:
 
-        _, c, _ = st.columns([1,1,1])
+        _, c, _ = st.columns([1, 1, 1])
 
         with c:
 
@@ -321,6 +327,7 @@ elif st.session_state.stage == "completed":
                 "Show Results",
                 use_container_width=True
             ):
+
                 st.session_state.show_password_box = True
                 st.rerun()
 
@@ -343,14 +350,14 @@ elif st.session_state.stage == "completed":
             )
 
             accuracy = (
-                100 * total_correct / total_trials
-                if total_trials else 0
+                total_correct / total_trials * 100
+                if total_trials > 0
+                else 0
             )
 
-            avg_rt = np.mean([
-                r["reaction_time_sec"]
-                for r in records
-            ])
+            avg_rt = np.mean(
+                [r["reaction_time_sec"] for r in records]
+            )
 
             congruent_trials = [
                 r for r in records
@@ -362,15 +369,15 @@ elif st.session_state.stage == "completed":
                 if r["condition"] == "Incongruent"
             ]
 
-            congruent_rt = np.mean([
-                r["reaction_time_sec"]
-                for r in congruent_trials
-            ])
+            congruent_rt = np.mean(
+                [r["reaction_time_sec"]
+                 for r in congruent_trials]
+            )
 
-            incongruent_rt = np.mean([
-                r["reaction_time_sec"]
-                for r in incongruent_trials
-            ])
+            incongruent_rt = np.mean(
+                [r["reaction_time_sec"]
+                 for r in incongruent_trials]
+            )
 
             stroop_effect = (
                 incongruent_rt - congruent_rt
@@ -378,26 +385,28 @@ elif st.session_state.stage == "completed":
 
             st.markdown("### Participant Summary")
 
-            c1, c2, c3 = st.columns(3)
+            m1, m2, m3 = st.columns(3)
 
-            c1.metric(
+            m1.metric(
                 "Accuracy",
                 f"{accuracy:.1f}%"
             )
 
-            c2.metric(
-                "Avg RT",
+            m2.metric(
+                "Average RT",
                 f"{avg_rt:.2f}s"
             )
 
-            c3.metric(
+            m3.metric(
                 "Total Trials",
                 total_trials
             )
 
             st.divider()
 
-            st.markdown("### Stroop Metrics")
+            st.markdown(
+                "### Stroop Effect Metrics"
+            )
 
             s1, s2, s3 = st.columns(3)
 
@@ -429,11 +438,9 @@ elif st.session_state.stage == "completed":
                 use_container_width=True
             )
 
-            csv = df.to_csv(index=False)
-
             st.download_button(
                 "Download Results CSV",
-                csv,
+                df.to_csv(index=False),
                 "stroop_results.csv",
                 "text/csv"
             )
@@ -441,7 +448,10 @@ elif st.session_state.stage == "completed":
             if st.button(
                 "Reset Session for Next Participant"
             ):
-                for key in list(st.session_state.keys()):
+
+                for key in list(
+                    st.session_state.keys()
+                ):
                     del st.session_state[key]
 
                 st.rerun()
