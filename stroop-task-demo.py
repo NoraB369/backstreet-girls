@@ -10,9 +10,11 @@ import random
 
 COLORS = {
     "RED": "#FF0000",
-    "BLUE": "#0066FF",
+    "ORANGE": "#FFA500",
+    "YELLOW": "#D4AA00",
     "GREEN": "#00AA00",
-    "YELLOW": "#D4AA00"
+    "BLUE": "#0066FF",
+    "PINK": "#FFC0CB"
 }
 
 TRIALS_PER_CONDITION = 20
@@ -276,14 +278,27 @@ elif st.session_state.stage == "testing":
         )
 
         st.button(
+            "ORANGE",
+            use_container_width=True,
+            on_click=process_response,
+            args=("ORANGE",)
+        )
+
+        st.button(
+            "YELLOW",
+            use_container_width=True,
+            on_click=process_response,
+            args=("YELLOW",)
+
+    with col2:
+
+        st.button(
             "GREEN",
             use_container_width=True,
             on_click=process_response,
             args=("GREEN",)
         )
-
-    with col2:
-
+        
         st.button(
             "BLUE",
             use_container_width=True,
@@ -292,10 +307,10 @@ elif st.session_state.stage == "testing":
         )
 
         st.button(
-            "YELLOW",
+            "PINK",
             use_container_width=True,
             on_click=process_response,
-            args=("YELLOW",)
+            args=("PINK",)
         )
 
 
