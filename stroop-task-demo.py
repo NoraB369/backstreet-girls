@@ -194,12 +194,8 @@ if st.session_state.stage == "ready":
             <h1 style="font-size:54px;">
                 Stroop Color Test
             </h1>
-
-            <p style="font-size:20px;">
                 Identify the FONT COLOR of each word.
             </p>
-
-            <p style="color:gray;">
                 Ignore what the word says.
             </p>
         </div>
