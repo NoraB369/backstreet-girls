@@ -289,6 +289,7 @@ elif st.session_state.stage == "testing":
             use_container_width=True,
             on_click=process_response,
             args=("YELLOW",)
+        )
 
     with col2:
 
