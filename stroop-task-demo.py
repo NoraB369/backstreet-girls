@@ -267,7 +267,7 @@ elif st.session_state.stage == "testing":
     with col1:
 
         st.button(
-            "RED = 1", 
+            "RED - PRESS 1", 
             shortcut="1",
             use_container_width=True,
             on_click=process_response,
@@ -275,14 +275,16 @@ elif st.session_state.stage == "testing":
         )
 
         st.button(
-            "ORANGE",
+            "ORANGE - PRESS 2",
+            shortcut="2",
             use_container_width=True,
             on_click=process_response,
             args=("ORANGE",)
         )
 
         st.button(
-            "YELLOW",
+            "YELLOW - PRESS 3",
+            shortcut="3",
             use_container_width=True,
             on_click=process_response,
             args=("YELLOW",)
@@ -291,21 +293,24 @@ elif st.session_state.stage == "testing":
     with col2:
 
         st.button(
-            "GREEN",
+            "GREEN - PRESS 4",
+            shortcut="4",
             use_container_width=True,
             on_click=process_response,
             args=("GREEN",)
         )
 
         st.button(
-            "BLUE",
+            "BLUE - PRESS 5",
+            shortcut="5",
             use_container_width=True,
             on_click=process_response,
             args=("BLUE",)
         )
 
         st.button(
-            "PINK",
+            "PINK - PRESS 6",
+            shortcut="6",
             use_container_width=True,
             on_click=process_response,
             args=("PINK",)
