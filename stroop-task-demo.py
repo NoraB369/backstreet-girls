@@ -200,6 +200,7 @@ if st.session_state.stage == "ready":
             </p>
                 Ignore what the word says.
             </p>
+                
             </p>
                 Each color corresponds to a number on the keyboard.
             </p>
