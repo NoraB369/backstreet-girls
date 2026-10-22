@@ -190,19 +190,17 @@ if st.session_state.stage == "ready":
             TRIALS_PER_CONDITION
         )
 
-    st.markdown(
-    """
-    <div style="text-align:center; margin-top:40px;">
-        <p style="font-size:20px;">
-            Identify the FONT COLOR of each word.
-        </p>
+    st.markdown("### Instructions")
 
-        <p style="color:gray;">
-            Ignore what the word says.
-        </p>
-    </div>
-    """,
-    unsafe_allow_html=True
+st.info(
+    """
+    Identify the **FONT COLOR** of each word.
+
+    Ignore what the word says.
+
+    Example:
+    - If the word **RED** appears in blue text, select **BLUE**.
+    """
 )
 
     _, c, _ = st.columns([1, 1.2, 1])
