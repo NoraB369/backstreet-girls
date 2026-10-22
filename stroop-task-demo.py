@@ -199,11 +199,11 @@ if st.session_state.stage == "ready":
 
             <p style="font-size:20px;">
                 Identify the FONT COLOR of each word.
-            </h3>
+            <p>
 
             <p style="color:gray;">
                 Ignore what the word says.
-            </h3>
+            <p>
         </div>
         """,
         unsafe_allow_html=True
