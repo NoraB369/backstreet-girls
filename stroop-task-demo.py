@@ -493,14 +493,14 @@ elif st.session_state.stage == "completed":
             summary_df.to_csv(index=False)
             + "\n"
             + df.to_csv(index=False)
-        )
-        
-        st.download_button(
-            "Download Results CSV",
-            csv_data,
-            "stroop_results.csv",
-            "text/csv"
-        )
+            )
+            
+            st.download_button(
+                "Download Results CSV",
+                csv_data,
+                "stroop_results.csv",
+                "text/csv"
+            )
 
             if st.button(
                 "Reset Session for Next Participant"
