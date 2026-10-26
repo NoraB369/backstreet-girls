@@ -191,17 +191,16 @@ if st.session_state.stage == "ready":
         )
 
     st.markdown(
-        f"""
-        <div style="text-align:center; margin-top:60px;">
-            <h2>Task Complete</h2>
-    
-            <p style="color:#666;">
-                Thank you for your participation.
+        """
+        <div style="text-align:center; margin-top:100px;">
+            <h1 style="font-size:54px;">
+                Stroop Color Test
+            </h1>
+                Identify the FONT COLOR of each word. Ignore what the word says.
             </p>
-    
-            <p style="font-size:20px;">
-                Total Completion Time:
-                <b>{st.session_state.total_session_time:.2f} seconds</b>
+                Each color corresponds to a number on the keyboard.
+            </p>
+                Ex. Red = 1, Orange = 2, Yellow = 3.
             </p>
         </div>
         """,
@@ -406,7 +405,7 @@ elif st.session_state.stage == "completed":
 
             st.markdown("### Participant Summary")
 
-            m1, m2, m3, m4 = st.columns(4)
+            m1, m2, m3 = st.columns(3)
 
             m1.metric(
                 "Accuracy",
@@ -421,11 +420,6 @@ elif st.session_state.stage == "completed":
             m3.metric(
                 "Total Trials",
                 total_trials
-            )
-
-            m4.metric(
-                "Completion Time",
-                f"{st.session_state.total_session_time:.2f}s"
             )
 
             st.divider()
@@ -453,31 +447,6 @@ elif st.session_state.stage == "completed":
 
             st.divider()
 
-            summary_data = {
-                "Total Trials": total_trials,
-                "Total Correct": total_correct,
-                "Accuracy (%)": round(accuracy, 2),
-                "Average RT (s)": round(avg_rt, 3),
-                "Congruent RT (s)": round(congruent_rt, 3),
-                "Incongruent RT (s)": round(incongruent_rt, 3),
-                "Stroop Effect (s)": round(stroop_effect, 3),
-                "Completion Time (s)": st.session_state.total_session_time
-            }
-            
-            summary_df = pd.DataFrame(
-                summary_data.items(),
-                columns=["Metric", "Value"]
-            )
-
-            st.divider()
-
-            st.markdown("### Overall Session Statistics")
-            
-            st.dataframe(
-                summary_df,
-                use_container_width=True
-            )
-
             df = pd.DataFrame(records)
 
             st.markdown(
@@ -489,15 +458,9 @@ elif st.session_state.stage == "completed":
                 use_container_width=True
             )
 
-            csv_data = (
-            summary_df.to_csv(index=False)
-            + "\n"
-            + df.to_csv(index=False)
-            )
-            
             st.download_button(
                 "Download Results CSV",
-                csv_data,
+                df.to_csv(index=False),
                 "stroop_results.csv",
                 "text/csv"
             )
