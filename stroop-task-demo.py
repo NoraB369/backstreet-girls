@@ -329,15 +329,7 @@ elif st.session_state.stage == "completed":
         f"""
         <div style="text-align:center; margin-top:60px;">
             <h2>Task Complete</h2>
-
-            <p style="color:#666;">
-                Thank you for your participation.
-            </p>
-
-            <p style="font-size:20px;">
-                Total Completion Time:
-                <b>{st.session_state.total_session_time:.2f} seconds</b>
-            </p>
+                Thank you for your participation!
         </div>
         """,
         unsafe_allow_html=True
