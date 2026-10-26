@@ -196,11 +196,11 @@ if st.session_state.stage == "ready":
             <h1 style="font-size:54px;">
                 Stroop Color Test
             </h1>
-                Identify the FONT COLOR of each word. Ignore what the word says.
+                Identify the FONT COLOR of each word, ignore what the word says.
             </p>
                 Each color corresponds to a number on the keyboard.
             </p>
-                Ex. Red = 1, Orange = 2, Yellow = 3.
+                Ex. Red = 1, Orange = 2, Yellow = 3
             </p>
         </div>
         """,
