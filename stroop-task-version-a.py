@@ -121,7 +121,7 @@ def generate_stroop_schedule(
 # ==========================================
 
 st.set_page_config(
-    page_title="Stroop Test (Version A)",
+    page_title="Stroop Test",
     layout="centered"
 )
 
@@ -239,7 +239,7 @@ if st.session_state.stage == "ready":
         """
         <div style="text-align:center; margin-top:100px;">
             <h1 style="font-size:54px;">
-                Stroop Color Test
+                Stroop Color Test (Version A)
             </h1>
                 Identify the FONT COLOR of each word, ignore what the word says.
             </p>
