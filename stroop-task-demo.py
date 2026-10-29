@@ -17,26 +17,63 @@ COLORS = {
     "PINK": "#FF46A2"
 }
 
-TRIALS_PER_CONDITION = 20
+TRIALS_PER_CONDITION = 24
 ADMIN_PASSWORD = "backstreet"
+SEED_MAP = {
+    "A": 101,
+    "B": 202,
+    "C": 303
+}
+TEST_VERSION = "A"
 
 # ==========================================
 # 2. STROOP TRIAL GENERATOR
 # ==========================================
 
-def generate_stroop_schedule(trials_per_condition=20):
+def valid_schedule(trials):
 
+    run_length = 1
+
+    for i in range(1, len(trials)):
+
+        if (
+            trials[i]["correct_response"]
+            ==
+            trials[i - 1]["correct_response"]
+        ):
+
+            run_length += 1
+
+            if run_length > 2:
+                return False
+
+        else:
+            run_length = 1
+
+    return True
+
+def generate_stroop_schedule(
+    trials_per_condition=24,
+    seed=1
+):
+
+    random.seed(seed)
     trials = []
-
     color_words = list(COLORS.keys())
+    color_pool = []
+
+    for color in color_words:
+        color_pool.extend(
+            [color] * (trials_per_condition // len(color_words))
+        )
+    
+    random.shuffle(color_pool)
 
     # --------------------------
     # Congruent Trials
     # --------------------------
 
-    for _ in range(trials_per_condition):
-
-        word = random.choice(color_words)
+    for word in color_pool:
 
         trials.append({
             "word": word,
@@ -48,16 +85,16 @@ def generate_stroop_schedule(trials_per_condition=20):
     # --------------------------
     # Incongruent Trials
     # --------------------------
+    incongruent_pool = color_pool.copy()
+    random.shuffle(incongruent_pool)
 
-    for _ in range(trials_per_condition):
-
-        word = random.choice(color_words)
-
+    for word in incongruent_pool:
+    
         possible_colors = [
             c for c in color_words
             if c != word
         ]
-
+    
         font_color = random.choice(possible_colors)
 
         trials.append({
@@ -67,9 +104,16 @@ def generate_stroop_schedule(trials_per_condition=20):
             "correct_response": font_color
         })
 
-    random.shuffle(trials)
-
-    return trials
+    for _ in range(1000):
+    
+        candidate = trials.copy()
+    
+        random.shuffle(candidate)
+    
+        if valid_schedule(candidate):
+            return candidate
+    
+    return candidate
 
 
 # ==========================================
@@ -187,7 +231,8 @@ if st.session_state.stage == "ready":
     if not st.session_state.trials:
 
         st.session_state.trials = generate_stroop_schedule(
-            TRIALS_PER_CONDITION
+            TRIALS_PER_CONDITION,
+            seed=SEED_MAP[TEST_VERSION]
         )
 
     st.markdown(
