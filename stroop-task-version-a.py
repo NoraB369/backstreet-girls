@@ -121,7 +121,7 @@ def generate_stroop_schedule(
 # ==========================================
 
 st.set_page_config(
-    page_title="Stroop Test",
+    page_title="Stroop Test (Version A)",
     layout="centered"
 )
 
